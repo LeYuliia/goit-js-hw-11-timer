@@ -5,16 +5,12 @@ const refs = {
   secsRef: document.querySelector("span[data-value=secs]"),
 };
 
-const CountdownTimer = {
-  load() {
-    setInterval(() => {
-      const targetDate = new Date("Apr 24, 2020");
-      const time = targetDate - Date.now();
-      updateTimer(time);
-    }, 1000);
-  },
+const CountdownTimer =() => {
+    const targetDate = new Date("Apr 24, 2020");
+    const time = targetDate - Date.now();
+    updateTimer(time);
 };
-
+setInterval(CountdownTimer, 1000);
 function updateTimer(time) {
   /*
    * Оставшиеся дни: делим значение UTC на 1000 * 60 * 60 * 24, количество
@@ -42,14 +38,15 @@ function updateTimer(time) {
    * миллисекунд в одной секунде (1000)
    */
   const secs = pad(Math.floor((time % (1000 * 60)) / 1000));
-  
-  refs.daysRef.textContent = `${days}`;
-  refs.hoursRef.textContent = `${hours}`;
-  refs.minsRef.textContent = `${mins}`;
-  refs.secsRef.textContent = `${secs}`;
+
+  refs.daysRef.textContent = days;
+  refs.hoursRef.textContent = hours;
+  refs.minsRef.textContent = mins;
+  refs.secsRef.textContent = secs;
 }
+
 function pad(value) {
   return String(value).padStart(2, "0");
 }
 
-window.addEventListener("load", CountdownTimer.load);
+window.addEventListener("load", CountdownTimer);
